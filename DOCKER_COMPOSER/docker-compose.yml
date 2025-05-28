@@ -37,6 +37,19 @@ services:
     networks:
       - app-network
 
+  produtoservice:
+    image: gabrieldataengineer/produtoservice:latest
+    ports:
+      - "8084:8080"
+    dns:
+      - 8.8.8.8
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      - clienteservice
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
