@@ -1,0 +1,4 @@
+gabrieldataengineer/produtoservice
+gabrieldataengineer/pedidoservice
+gabrieldataengineer/clienteservice
+gabrieldataengineer/estoqueservice
