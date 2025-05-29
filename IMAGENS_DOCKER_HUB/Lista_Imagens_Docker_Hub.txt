@@ -1,4 +1,5 @@
-gabrieldataengineer/produtoservice
-gabrieldataengineer/pedidoservice
-gabrieldataengineer/clienteservice
-gabrieldataengineer/estoqueservice
+gabrieldataengineer/pedidoreceiver -> https://hub.docker.com/repository/docker/gabrieldataengineer/pedidoreceiver/general
+gabrieldataengineer/pedidoservice -> https://hub.docker.com/repository/docker/gabrieldataengineer/pedidoservice/general
+gabrieldataengineer/produtoservice -> https://hub.docker.com/repository/docker/gabrieldataengineer/produtoservice/general
+gabrieldataengineer/clienteservice -> https://hub.docker.com/repository/docker/gabrieldataengineer/clienteservice/general
+gabrieldataengineer/estoqueservice -> https://hub.docker.com/repository/docker/gabrieldataengineer/estoqueservice/general
