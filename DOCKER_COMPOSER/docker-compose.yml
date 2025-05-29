@@ -50,6 +50,30 @@ services:
     networks:
       - app-network
 
+  pedidoreceiver:
+    image: gabrieldataengineer/pedidoreceiver:latest
+    ports:
+      - "8085:8080"
+    environment:
+      - spring.data.mongodb.uri=mongodb+srv://gabrieln91:09090991hgh3099@cluster0.h2pf5c3.mongodb.net/techchallengefase4microservico?retryWrites=true&w=majority
+      - spring.rabbitmq.host=rabbitmq
+      - spring.rabbitmq.port=5672
+      - spring.rabbitmq.username=guest
+      - spring.rabbitmq.password=guest
+    depends_on:
+      - rabbitmq
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
