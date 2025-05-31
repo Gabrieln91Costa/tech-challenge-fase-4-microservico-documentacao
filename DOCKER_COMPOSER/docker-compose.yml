@@ -7,6 +7,9 @@ services:
       - "8081:8080"
     dns:
       - 8.8.8.8
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - spring.data.mongodb.uri=mongodb+srv://gabrieln91:09090991hgh3099@cluster0.h2pf5c3.mongodb.net/techchallengefase4microservico?retryWrites=true&w=majority
     networks:
       - app-network
 
@@ -18,6 +21,7 @@ services:
       - 8.8.8.8
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+      - spring.data.mongodb.uri=mongodb+srv://gabrieln91:09090991hgh3099@cluster0.h2pf5c3.mongodb.net/techchallengefase4microservico?retryWrites=true&w=majority
     depends_on:
       - clienteservice
     networks:
@@ -31,9 +35,15 @@ services:
       - 8.8.8.8
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+      - spring.rabbitmq.host=rabbitmq
+      - spring.rabbitmq.port=5672
+      - spring.rabbitmq.username=guest
+      - spring.rabbitmq.password=guest
+      - spring.data.mongodb.uri=mongodb+srv://gabrieln91:09090991hgh3099@cluster0.h2pf5c3.mongodb.net/techchallengefase4microservico?retryWrites=true&w=majority
     depends_on:
       - clienteservice
       - estoqueservice
+      - rabbitmq
     networks:
       - app-network
 
@@ -45,6 +55,7 @@ services:
       - 8.8.8.8
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+      - spring.data.mongodb.uri=mongodb+srv://gabrieln91:09090991hgh3099@cluster0.h2pf5c3.mongodb.net/techchallengefase4microservico?retryWrites=true&w=majority
     depends_on:
       - clienteservice
     networks:
@@ -54,7 +65,10 @@ services:
     image: gabrieldataengineer/pedidoreceiver:latest
     ports:
       - "8085:8080"
+    dns:
+      - 8.8.8.8
     environment:
+      - SPRING_PROFILES_ACTIVE=prod
       - spring.data.mongodb.uri=mongodb+srv://gabrieln91:09090991hgh3099@cluster0.h2pf5c3.mongodb.net/techchallengefase4microservico?retryWrites=true&w=majority
       - spring.rabbitmq.host=rabbitmq
       - spring.rabbitmq.port=5672
@@ -67,12 +81,16 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: rabbitmq
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5672:5672"     # Porta de comunicação
+      - "15672:15672"   # Porta do painel de controle Web
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   app-network:
