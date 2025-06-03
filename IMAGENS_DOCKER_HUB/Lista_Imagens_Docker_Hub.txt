@@ -3,3 +3,4 @@ gabrieldataengineer/pedidoservice -> https://hub.docker.com/repository/docker/ga
 gabrieldataengineer/produtoservice -> https://hub.docker.com/repository/docker/gabrieldataengineer/produtoservice/general
 gabrieldataengineer/clienteservice -> https://hub.docker.com/repository/docker/gabrieldataengineer/clienteservice/general
 gabrieldataengineer/estoqueservice -> https://hub.docker.com/repository/docker/gabrieldataengineer/estoqueservice/general
+gabrieldataengineer/pagamentoservice -> https://hub.docker.com/repository/docker/gabrieldataengineer/pagamentoservice/general
