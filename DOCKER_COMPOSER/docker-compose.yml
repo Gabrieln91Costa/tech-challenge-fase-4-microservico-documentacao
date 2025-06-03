@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   clienteservice:
     image: gabrieldataengineer/clienteservice:latest
     ports:
@@ -40,10 +53,14 @@ services:
       - spring.rabbitmq.username=guest
       - spring.rabbitmq.password=guest
       - spring.data.mongodb.uri=mongodb+srv://gabrieln91:09090991hgh3099@cluster0.h2pf5c3.mongodb.net/techchallengefase4microservico?retryWrites=true&w=majority
+      - CLIENTESERVICE_URL=http://clienteservice:8080/clientes/
     depends_on:
       - clienteservice
       - estoqueservice
       - rabbitmq
+    command: sh -c "./wait-for-it.sh rabbitmq:5672 --timeout=30 -- java -jar app.jar"
+    volumes:
+      - ./wait-for-it.sh:/wait-for-it.sh
     networks:
       - app-network
 
@@ -74,25 +91,40 @@ services:
       - spring.rabbitmq.port=5672
       - spring.rabbitmq.username=guest
       - spring.rabbitmq.password=guest
+      - CLIENTESERVICE_URL=http://clienteservice:8080/clientes/
+      - PRODUTOSERVICE_URL=http://produtoservice:8080/produtos/sku/
     depends_on:
+      - clienteservice
+      - produtoservice
       - rabbitmq
+    command: sh -c "./wait-for-it.sh rabbitmq:5672 --timeout=30 -- java -jar app.jar"
+    volumes:
+      - ./wait-for-it.sh:/wait-for-it.sh
     networks:
       - app-network
 
-  rabbitmq:
-    image: rabbitmq:3-management
+  pagamentoservice:
+    image: gabrieldataengineer/pagamentoservice:latest
     ports:
-      - "5672:5672"     # Porta de comunicação
-      - "15672:15672"   # Porta do painel de controle Web
+      - "8086:8080"
+    dns:
+      - 8.8.8.8
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - spring.rabbitmq.host=rabbitmq
+      - spring.rabbitmq.port=5672
+      - spring.rabbitmq.username=guest
+      - spring.rabbitmq.password=guest
+      - spring.data.mongodb.uri=mongodb+srv://gabrieln91:09090991hgh3099@cluster0.h2pf5c3.mongodb.net/techchallengefase4microservico?retryWrites=true&w=majority
+    depends_on:
+      - clienteservice
+      - rabbitmq
+    command: sh -c "./wait-for-it.sh rabbitmq:5672 --timeout=30 -- java -jar app.jar"
+    volumes:
+      - ./wait-for-it.sh:/wait-for-it.sh
     networks:
       - app-network
-    healthcheck:
-      test: ["CMD", "rabbitmqctl", "status"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
 networks:
   app-network:
     driver: bridge
-
