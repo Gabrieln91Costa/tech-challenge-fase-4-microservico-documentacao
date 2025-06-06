@@ -17,15 +17,9 @@ https://github.com/Gabrieln91Costa/tech-challenge-fase-4-microservico-documentac
 
 
 # Diretório GitHub Microsserviços 
-o Cliente 
 https://github.com/Gabrieln91Costa/tech-challenge-fase-4-microservico-cliente-service 
-o Produto  
 https://github.com/Gabrieln91Costa/tech-challenge-fase-4-microservico-produto-service 
-o Pedido 
 https://github.com/Gabrieln91Costa/tech-challenge-fase-4-microservico-pedido-service 
-o Pedido Receiver  
 https://github.com/Gabrieln91Costa/tech-challenge-fase-4-microservico-pedido-receiver 
-o Pagamento  
 https://github.com/Gabrieln91Costa/tech-challenge-fase-4-microservico-pagamento-service 
-o Estoque 
 https://github.com/Gabrieln91Costa/tech-challenge-fase-4-microservico-estoque-service
